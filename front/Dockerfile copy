@@ -1,0 +1,20 @@
+# Etapa 1: Construcción de la aplicación React
+FROM node:latest AS build
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+# Etapa 2: Copia de los archivos construidos a una imagen Nginx
+FROM nginx:latest
+
+COPY --from=build /usr/src/app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
