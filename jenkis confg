@@ -37,3 +37,68 @@ sleep 10
 ./deleter.sh
 sleep 5
 ./exec.sh
+
+
+
+
+#########################COMPOSE#############
+version: '3.8'
+
+services:
+  jenkins:
+    build:
+      context: .
+    container_name: jenkins-blueocean
+    restart: on-failure
+    networks:
+      - jenkins
+    environment:
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+    ports:
+      - "8080:8080"    # Interfaz web de Jenkins
+      - "50000:50000"  # Puerto para agentes
+      - "80:80"
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client:ro
+      - /home/ubuntu/.ssh/:/var/jenkins_home/.ssh/
+
+  docker:
+    image: docker:dind
+    container_name: jenkins-docker
+    privileged: true
+    networks:
+      - jenkins
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - jenkins-data:/var/jenkins_home
+    ports:
+      - "2376:2376"  # Puerto para comunicación TLS
+
+networks:
+  jenkins:
+    driver: bridge
+
+volumes:
+  jenkins-data:
+  jenkins-docker-certs:
+
+###################DOCKERFILE###############################
+
+FROM jenkins/jenkins:2.479.1-jdk17
+USER root
+RUN mkdir -p /var/jenkins_home/.ssh && chown -R jenkins:jenkins /var/jenkins_home/.ssh
+RUN apt-get update && apt-get install -y lsb-release
+RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+  https://download.docker.com/linux/debian/gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) \
+  signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+  https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+RUN apt-get update && apt-get install -y docker-ce-cli
+USER jenkins
+RUN jenkins-plugin-cli --plugins "blueocean docker-workflow"
