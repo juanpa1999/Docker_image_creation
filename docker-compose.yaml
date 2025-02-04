@@ -21,6 +21,20 @@ services:
       - "8000"
     depends_on:
       - db
+
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    networks:
+      - dnet
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pablo@pablo.com  # Cambia esto por tu correo
+      - PGADMIN_DEFAULT_PASSWORD=pablo        # Cambia esto por una contraseña segura
+    expose:
+      - "5050"  # Mapea el puerto 5050 del host al 80 del contenedor
+    depends_on:
+      - db
     
 
   nginx:
@@ -39,6 +53,7 @@ services:
       - VIRTUAL_HOST=pablodevops.com,www.pablodevops.com
     depends_on:
       - back
+      - pgadmin
 
 
   nginx-proxy:
@@ -54,26 +69,9 @@ services:
       # - ./nginx/html:/usr/share/nginx/html
     networks:
       - dnet
-
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=pablo@pablo.com  # Cambia esto por tu correo
-      - PGADMIN_DEFAULT_PASSWORD=pablo        # Cambia esto por una contraseña segura
-    expose:
-      - "5050"  # Mapea el puerto 5050 del host al 80 del contenedor
-    networks:
-      - dnet
-    depends_on:
-      - db
-
   
 
 networks:
   dnet:
     driver: bridge
   
-  
-
