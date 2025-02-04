@@ -21,20 +21,6 @@ services:
       - "8000"
     depends_on:
       - db
-
-      
-  pgadmin:
-    build:
-      context: ./db  # El contexto es el directorio que contiene el Dockerfile
-      dockerfile: Dockerfile2 
-    networks:
-      - dnet
-    environment:
-      - DB_HOST=db
-    expose:
-      - "5050"  # Mapea el puerto 5050 del host al 80 del contenedor
-    depends_on:
-      - db
     
 
   nginx:
