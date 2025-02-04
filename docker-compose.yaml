@@ -25,7 +25,7 @@ services:
 
   pgadmin:
     build:
-      context: .
+      context: ./db/Dockerfile2
     networks:
       - dnet
     environment:
