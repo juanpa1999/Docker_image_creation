@@ -22,10 +22,11 @@ services:
     depends_on:
       - db
 
-
+      
   pgadmin:
     build:
-      context: ./db/Dockerfile2
+      context: ./db  # El contexto es el directorio que contiene el Dockerfile
+      dockerfile: Dockerfile2 
     networks:
       - dnet
     environment:
