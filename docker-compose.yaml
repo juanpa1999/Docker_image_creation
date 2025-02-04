@@ -55,6 +55,22 @@ services:
     networks:
       - dnet
 
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pablo@pablo.com  # Cambia esto por tu correo
+      - PGADMIN_DEFAULT_PASSWORD=pablo        # Cambia esto por una contraseña segura
+    expose:
+      - "5050"  # Mapea el puerto 5050 del host al 80 del contenedor
+    networks:
+      - dnet
+    depends_on:
+      - db
+
+  
+
 networks:
   dnet:
     driver: bridge
