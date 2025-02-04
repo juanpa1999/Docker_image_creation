@@ -39,7 +39,6 @@ services:
       - VIRTUAL_HOST=pablodevops.com,www.pablodevops.com
     depends_on:
       - back
-      - pgadmin
 
 
   nginx-proxy:
