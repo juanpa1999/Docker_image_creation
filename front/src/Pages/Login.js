@@ -123,7 +123,7 @@ function Login() {
           <div className="logo">
             <img src={logoRefoEnergy} alt="RefoEnergy Logo" />
           </div>
-          <h2 className="title">Sign in</h2>
+          <h2 className="title">Iniciar Sesión</h2>
           {errorMessage && <div className="error-message">{errorMessage}</div>}
           <div className="input-field">
             <FontAwesomeIcon icon={faUser} />
@@ -138,7 +138,7 @@ function Login() {
               required
             />
           </div>
-          <input type="submit" value="Sign in" className="btn" />
+          <input type="submit" value="Iniciar" className="btn" />
 
           <p className="account-text">
             ¿No tienes una cuenta?{" "}
@@ -178,7 +178,7 @@ function Login() {
           <div className="logo">
             <img src={logoRefoEnergy} alt="RefoEnergy Logo" />
           </div>
-          <h2 className="title">Users registration</h2>
+          <h2 className="title">Registro de usuarios</h2>
           <div className="input-field">
             <FontAwesomeIcon icon={faUser} />
             <input name="username" type="text" placeholder="Usuario" required />
@@ -226,14 +226,14 @@ function Login() {
             {passwordMessage}
           </div>
           <p className="account-text-mobile">
-            Do you have an account?{" "}
+            ¿Ya tienes una cuenta?{" "}
             <a href="#!" onClick={() => toggleMode("sign-in-mode")}>
               Inicia sesión aquí
             </a>
           </p>
           <input
             type="submit"
-            value="Register"
+            value="Registrarse"
             className="btn"
             id="SignUpButton"
           />
@@ -244,10 +244,10 @@ function Login() {
         {/* Panel Izquierdo */}
         <div className="panel left-panel">
           <div className="content">
-            <h3>Do you have an account?</h3>
-            <p>Please use your credential</p>
+            <h3>¿Ya tienes una cuenta?</h3>
+            <p>Por favor, usa tus credenciales para iniciar sesión</p>
             <button className="btn" onClick={() => toggleMode("sign-in-mode")}>
-              Sign in
+              Iniciar sesión
             </button>
           </div>
         </div>
@@ -261,7 +261,7 @@ function Login() {
               credenciales corporativas
             </p>
             <button className="btn" onClick={() => toggleMode("sign-up-mode")}>
-              Register
+              Registrarse
             </button>
           </div>
         </div>
