@@ -24,7 +24,7 @@ origins = [
     config("NGROK"),
     "http://localhost",
     "http://localhost/api",
-    "http://pablodevops.com/"
+    "https://pablodevops.com/"
 ]
 
 # Configure CORS
